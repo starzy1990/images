@@ -1,0 +1,130 @@
+config:
+  retries: 3
+  retry.backoff: 1000
+  env: dev
+  app_home: /data/script/bigData/paqr_test/datacomputing
+  app_env: /data/script/venv/bin/activate
+
+nodes:
+  - name: import_data_paqr_start
+    type: command
+    config:
+      command: echo "start import data paqr"
+
+  - name: import_biz_contract
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_contract ods_t_paqr_biz_contract 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_guarantee_premium
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_guarantee_premium ods_t_paqr_biz_guarantee_premium 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_guarantee_premium_details
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_guarantee_premium_details ods_t_paqr_biz_guarantee_premium_details 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_loan
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_loan ods_t_paqr_biz_loan 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_project
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_project ods_t_paqr_biz_project 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_business_interface
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_business_interface ods_t_paqr_biz_business_interface 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_interface_config
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_interface_config ods_t_paqr_biz_interface_config 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_guarantee_apply
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_guarantee_apply ods_t_paqr_biz_guarantee_apply 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_paqr_iou_info
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py paqr_iou_info ods_t_paqr_paqr_iou_info -1 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+    - name: import_biz_reinsurance_batch
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_reinsurance_batch ods_t_paqr_biz_reinsurance_batch -1 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+    - name: import_biz_reinsurance_info
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py biz_reinsurance_info ods_t_paqr_biz_reinsurance_info -1 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+     - name: import_paqr_transfer_file
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_guaranty_platform.py paqr_transfer_file ods_t_paqr_paqr_transfer_file -1 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_compensation
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_compensation_center.py biz_compensation ods_t_paqr_biz_compensation 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_biz_recoupment
+    type: command
+    config:
+      command: sh ${app_home}/batch/exec_import_project.sh ${app_env} ${app_home} ./compute/import_data_project/import_compensation_center.py biz_recoupment ods_t_paqr_biz_recoupment 19 id 4
+    dependsOn:
+      - import_data_paqr_start
+
+  - name: import_data_paqr_end
+    type: command
+    config:
+      command: echo "import data paqr finish"
+    dependsOn:
+      - import_biz_contract
+      - import_biz_guarantee_premium
+      - import_biz_guarantee_premium_details
+      - import_biz_loan
+      - import_biz_project
+      - import_biz_business_interface
+      - import_biz_interface_config
+      - import_biz_guarantee_apply
+      - import_paqr_iou_info
+      - import_biz_reinsurance_batch
+      - import_biz_reinsurance_info
+      - import_paqr_transfer_file
+      - import_biz_compensation
+      - import_biz_recoupment
